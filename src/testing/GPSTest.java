@@ -12,7 +12,7 @@ public class GPSTest {
 		Engine[] engine = new Engine[2];
 		GPS gps = new GPS();
 		final double MAXRPM = 10000;
-		double expectedLatLon = 100*Math.sin(45)*.1;
+		double expectedLatLon = (100/3.6)*Math.sin(45*Math.PI/180)*.1;
 		
 		engine[0] = new Engine(MAXRPM);
 		engine[1] = new Engine(MAXRPM);
@@ -20,8 +20,8 @@ public class GPSTest {
 		engine[1].setCurrentRPM(2000);
 		
 		gps.updateLocation(45, 100, 0.1);
-		assertEquals(gps.getLat(),expectedLatLon,.001);
-		assertEquals(gps.getLon(),expectedLatLon,.001);
+		assertEquals(gps.getLat(),expectedLatLon/3.6,.01);
+		assertEquals(gps.getLon(),expectedLatLon/3.6,.01);
 		
 		gps.updateLocation(180, 300, 0.01);
 		assertEquals(gps.getLat(),expectedLatLon,.001);
