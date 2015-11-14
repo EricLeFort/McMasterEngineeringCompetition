@@ -1,7 +1,5 @@
 package physicalSystems;
 
-import errors.*;
-
 /**
  * Emulates a theoretical Gyrocompass. Would normally read in values, in this scenario it will update its own values according
  * to the relevant states passed in.
@@ -9,6 +7,7 @@ import errors.*;
  * @version 1.0
  */
 public class Gyrocompass{
+	
 	private double direction, pitch;
 	
 	/**
@@ -25,12 +24,12 @@ public class Gyrocompass{
 	 * @param startDirection - Starting Direction of Airplane
 	 * @throws AngleOutOfBoundsException 
 	 */
-	public Gyrocompass(double startDirection) throws AngleOutOfBoundsException{
+	public Gyrocompass(double startDirection){
 		if(startDirection >= 0 && startDirection < 360){											// Runs if 0 -> startDirection -> 360
 			direction = startDirection;
 			pitch = 0;
 		}else{
-			throw new AngleOutOfBoundsException("Direction must be within 0 and 360(exclusive).");
+			throw new IllegalArgumentException("Direction must be within 0 and 360(exclusive).");
 		}
 	}//Constructor()
 	
@@ -41,12 +40,12 @@ public class Gyrocompass{
 	 * @param startPitch - degrees, starting Pitch of Airplane
 	 * @throws AngleOutOfBoundsException 
 	 */
-	public Gyrocompass(double startDirection, double startPitch) throws AngleOutOfBoundsException {
+	public Gyrocompass(double startDirection, double startPitch){
 		if( (startDirection >= 0 && startDirection < 360) && (startPitch <= 90 && startPitch >= -90) ){
 			direction = startDirection;
 			pitch = startPitch;
 		}else{
-			throw new AngleOutOfBoundsException("Direction must be within 0 and 360(exclusive) and Pitch must be within -90 and 90.");
+			throw new IllegalArgumentException("Direction must be within 0 and 360(exclusive) and Pitch must be within -90 and 90.");
 		}
 	}//Constructor()
 
@@ -57,15 +56,15 @@ public class Gyrocompass{
 	 * @param flapState - -90 -> 90 degrees, inclusive
 	 * @param timePassed - seconds, time since last update, positive
 	 */
-	public void updateDirection(double currentAcceleration, double currentSpeed, double flapState, long timePassed) {
+	public void updateDirection(double currentAcceleration, double currentSpeed, double flapState, long timePassed){
 		if(currentSpeed < 0) {
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("Current speed must be positive.");
 		} else if(flapState > 90 || flapState < -90) {
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("Flapstate must be between 90 and -90 inclusive.");
 		} 
-		double c1 = 0.5;																							//TODO Change to realistic 
+		double c = 0.5;																							//TODO Change to Realistic 
 		currentSpeed = currentSpeed / 3.6;
-		direction += c1 * flapState * (currentSpeed * timePassed + currentAcceleration * timePassed * timePassed);
+		direction += c * flapState * ((currentSpeed * timePassed) + (currentAcceleration * timePassed * timePassed));
 	}//updateDirection()
 	
 	/**
@@ -75,7 +74,13 @@ public class Gyrocompass{
 	 * @param timePassed - seconds, time since last update, positive
 	 */
 	public void updatePitch(double flapState, double currentSpeed, long timePassed){
-		//TODO implement
+		if(currentSpeed < 0) {
+			throw new IllegalArgumentException("Current speed must be positive.");
+		} else if(flapState > 90 || flapState < -90) {
+			throw new IllegalArgumentException("Flapstate must be between 90 and -90 inclusive.");
+		} 
+		double c = 0.5;																							//TODO Change to Realistic
+		pitch += c * flapState * currentSpeed;
 	}//updatePitch()
 	
 	/**
