@@ -49,6 +49,7 @@ public class GPS{
 		} else if(timePassed < 0) {
 			throw new IllegalArgumentException("TimePassed must be positive.");
 		}
+
 		lon += currentSpeed / 3.6 * Math.cos(direction*Math.PI/180) * timePassed;
 		lat += currentSpeed / 3.6 * Math.sin(direction*Math.PI/180) * timePassed;
 	}//updateLocation()
