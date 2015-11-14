@@ -59,5 +59,13 @@ public class GPSTest {
 		engine[0] = new Engine(MAXRPM);
 		engine[1] = new Engine(MAXRPM);
 		
+		gps.updateAltitude(20, 200, 100, 0.1);
+		assertEquals(gps.getAltitude(), 0.0, 0.1);
+		
+		gps.updateAltitude(20, 200, 200, 0.1);
+		assertEquals(gps.getAltitude(),1.90011,0.1);
+		
+		gps.updateAltitude(40, 400, 200, 0.1);
+		assertEquals(gps.getAltitude(),9.042196,0.1);
 	}
 }

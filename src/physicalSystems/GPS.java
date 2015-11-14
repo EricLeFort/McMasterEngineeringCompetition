@@ -5,22 +5,25 @@ package physicalSystems;
  * @version 1.0
  */
 public class GPS{
-	private double lat, lon, altitude;
+	private double lat, lon, altitude, groundLevel;
 
 	/**
-	 * Creates a new GPS with its latitude, longitude and altitude set to an initial value of 0.
+	 * Creates a new GPS with its latitude, longitude, altitude and ground level set to an initial value of 0.
 	 */
 	public GPS(){
-		lat = lon = altitude = 0;
+		lat = lon = altitude = groundLevel = 0;
 	}//Constructor
 	
 	/**
-	 * Creates a new GPS with its latitude and longitude set to an initial value of 0 and its altitude set to whatever is passed in.
+	 * Creates a new GPS with its latitude and longitude set to an initial value of 0 
+	 * and its altitude and groundLevel set to whatever is passed in.
 	 * @param altitude
+	 * @param groundLevel
 	 */
-	public GPS(double altitude){
+	public GPS(double altitude, double groundLevel){
 		lat = lon = 0;
 		this.altitude = altitude;
+		this.groundLevel = groundLevel;
 	}//Constructor
 	
 	/**
@@ -28,11 +31,13 @@ public class GPS{
 	 * @param lat
 	 * @param lon
 	 * @param altitude
+	 * @param groundLevel
 	 */
-	public GPS(double lat, double lon, double altitude){
+	public GPS(double lat, double lon, double altitude, double groudLevel){
 		this.lat = lat;
 		this.lon = lon;
 		this.altitude = altitude;
+		this.groundLevel = groundLevel;
 	}//Constructor
 	
 	/**
@@ -62,6 +67,7 @@ public class GPS{
 	 * @param timePassed - seconds, the time passed since the last update.
 	 */
 	public synchronized void updateAltitude(double pitch, double currentSpeed, double minClimbSpeed, double timePassed){
+		double difference;
 		if(pitch >= 90 || pitch <= -90) {
 			throw new IllegalArgumentException("Pitch must be between -90 and 90.");
 		} else if(currentSpeed < 0) {
@@ -70,8 +76,15 @@ public class GPS{
 			throw new IllegalArgumentException("TimePassed must be positive.");
 		}
 		
-		if(!(currentSpeed < minClimbSpeed)){										//If the plane is too slow, no vertical climbing.
+		if(currentSpeed >= minClimbSpeed){										//If the plane is too slow, no vertical climbing.
 			altitude += Math.sin(pitch*Math.PI/180) * currentSpeed / 3.6 * timePassed;
+		}else{
+			difference = (9.8 - 9.8*(currentSpeed / minClimbSpeed)) * timePassed * timePassed;
+			if(altitude - difference <= groundLevel) {
+				altitude = groundLevel;
+			} else {
+				altitude -= difference;
+			}
 		}
 	}//updateAltitude()
 	
