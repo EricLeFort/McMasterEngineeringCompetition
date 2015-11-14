@@ -5,6 +5,7 @@ package physicalSystems;
  * @version 1.0
  */
 public class GPS{
+	
 	private double lat, lon, altitude;
 
 	/**
