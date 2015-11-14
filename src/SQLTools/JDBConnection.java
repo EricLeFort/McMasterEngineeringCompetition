@@ -4,7 +4,7 @@ package SQLTools;
  * 
  * Be sure to run MAMP before running this code.
  * 
- * @author Christopher McDonald
+ * @author Christopher McDonald, Eric Le Fort
  * @version 1.0
  * 
  */
@@ -16,20 +16,33 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Scanner;
 
-public class JDBCConnection{
+public class JDBConnection{
 	private final String host, user, pass, database;
 
 	public static void main(String[] args){
-		JDBCConnection connection = new JDBCConnection("jdbc:mysql://localhost:8889/mysql", "root", "root", "mysql");
-		connection.createTable("JavaStuff",
-				new String[]{"ID", "Error"},
-				new String[]{"INT NOT NULL", "VARCHAR(255) NOT NULL"},
-				new String[]{"PRIMARY KEY (`ID`)"});
-		connection.insert("JavaStuff", new String[]{"ID", "Error"}, new String[]{"100","Chris is better than Erc."});
-		connection.insert("JavaStuff", new String[]{"ID", "Error"}, new String[]{"404", "Fucks not found"});
-		connection.insert("JavaStuff", new String[]{"ID", "Error"}, new String[]{"5", "Eric"});
-		connection.dropTable("JavaStuff");
+		try{
+			JDBConnection connection = new JDBConnection("jdbc:mysql://localhost:8889/mysql", "root", "root", "mysql");
+			
+			connection.createTable("JavaStuff",
+					new String[]{"ID", "Error"},
+					new String[]{"INT NOT NULL", "VARCHAR(255) NOT NULL"},
+					new String[]{"PRIMARY KEY (`ID`)"});
+			
+			connection.insert("JavaStuff", new String[]{"ID", "Error"}, new String[]{"404", "Fucks not found."});
+			connection.update("JavaStuff", new String[]{"ID", "Error"}, new String[]{"403", "Fuck found!"}, "`ID`=404");
+			connection.delete("JavaStuff", "`ID`=403");
+			
+			connection.insert("JavaStuff", new String[]{"ID", "Error"}, new String[]{"5", "Eric"});
+			connection.update("JavaStuff", new String[]{"Error"}, new String[]{"Eric v2.0"}, "`Error`='Eric'");
+			connection.delete("JavaStuff", "`Error`='Eric'");
+			
+			new Scanner(System.in).nextInt();
+			connection.dropTable("JavaStuff");
+		}catch(SQLException sqle){
+			sqle.printStackTrace();
+		}
 	}//main()
 
 	/**
@@ -39,11 +52,12 @@ public class JDBCConnection{
 	 * @param pass
 	 * @param database
 	 */
-	public JDBCConnection(String host, String user, String pass, String database){
+	public JDBConnection(String host, String user, String pass, String database) throws SQLException{
 		this.host = host;
 		this.user = user;
 		this.pass = pass;
 		this.database = database;
+		DriverManager.registerDriver(new com.mysql.jdbc.Driver());			//Creates and registers an instance of Driver.
 	}//Constructor
 
 	/**
@@ -54,7 +68,6 @@ public class JDBCConnection{
 		Connection connection = null;
 
 		try{
-			DriverManager.registerDriver(new com.mysql.jdbc.Driver());			//Create instance of Driver
 			connection = DriverManager.getConnection(host,user,pass);		//Create connection, with credentials
 
 			connection.close();
@@ -88,7 +101,6 @@ public class JDBCConnection{
 		}
 		command += ");";
 
-		System.out.println(command);
 		return executeUpdateCommand(command);
 	}//createTable()
 
@@ -116,7 +128,7 @@ public class JDBCConnection{
 			return false;
 		}
 
-		command += columns[0]+ "=" + newValues[0];
+		command += columns[0]+ "='" + newValues[0] + "'";
 		for(int i = 1; i < columns.length; i++){
 			command += ",`" + columns[i] + "`='" + newValues[i] + "'";
 		}
@@ -189,7 +201,7 @@ public class JDBCConnection{
 			connection.close();
 			return true;
 		}catch(SQLException sqle){
-			sqle.printStackTrace();
+			System.out.println(sqle.getMessage());
 		}
 
 		return false;
@@ -200,7 +212,7 @@ public class JDBCConnection{
 	 * @param stmt - Query to be processed.
 	 * @return A 2-D array containing all results of the given query.
 	 */
-	public String[][] runQuery(String query) {
+	public String[][] executeQuery(String query) {
 		ArrayList<String[]> tuplesOut = new ArrayList<String[]>();
 		Connection connection = null;
 		Statement statement = null;
@@ -208,7 +220,6 @@ public class JDBCConnection{
 		ResultSetMetaData meta = null;
 
 		try{
-			DriverManager.registerDriver(new com.mysql.jdbc.Driver());			//Creates instance of Driver
 			connection = DriverManager.getConnection(host, user, pass);			//Creates connection with credentials
 			statement = connection.createStatement();
 			tuplesIn = statement.executeQuery(query);							//Retrieve Tuples from query
@@ -228,10 +239,10 @@ public class JDBCConnection{
 
 			return (String[][])tuplesOut.toArray();
 		}catch(SQLException sqle){
-			sqle.printStackTrace();
+			System.out.println(sqle.getMessage());
 		}
 
 		return null;
-	}//runQuery
-
-}//ConnectionMethods
+	}//executeQuery
+	
+}//JDBConnection

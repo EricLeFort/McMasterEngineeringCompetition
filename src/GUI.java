@@ -1,7 +1,6 @@
-
 /**
  * @author Eric Le Fort, Christopher McDonald, Spencer Deevy
- *
+ * @version 1.0
  */
 import javax.swing.*;
 import java.awt.GridLayout;
@@ -14,9 +13,6 @@ public class GUI{
 	private JButton boardBtns[][];
 	private JLabel infoLbl, playerLbl, movesLbl;
 
-	/**
-	 * Initializes the components of the GUI as well as any styles used in their display.
-	 */
 	public GUI(){
 		main = new JFrame();
 		boardPanel = new JPanel();
