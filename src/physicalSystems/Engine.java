@@ -6,7 +6,7 @@ package physicalSystems;
 
 public class Engine{
 	private final double maxRPM;
-	private double currentRPM;
+	private double currentRPM, currentRPMMaxSpeed;
 	private boolean isOn;
 	
 	/**
@@ -29,11 +29,12 @@ public class Engine{
 	 * @throws IllegalArgumentException
 	 */
 	public void setCurrentRPM(double newRPM) throws IllegalArgumentException{
-		if(newRPM > maxRPM || newRPM < 0){
+		if(newRPM > maxRPM || newRPM < 0 || !isOn){
 			throw new IllegalArgumentException("Cannot set the engine RPM to more than " + maxRPM
 				+ "RPM. You tried setting it to: " + newRPM);
 		}
 		currentRPM = newRPM;
+		currentRPMMaxSpeed = currentRPM / 5;
 	}//setCurrentRPM()
 	
 	/**
@@ -54,7 +55,7 @@ public class Engine{
 		isOn = false;
 		currentRPM = 0;
 	}//turnOff()
-	
+
 	/**
 	 * Returns the maximum RPM this engine can perform at.
 	 * @return A double containing the maximum RPM.
@@ -66,6 +67,12 @@ public class Engine{
 	 * @return A double containing the current RPM.
 	 */
 	public double getCurrentRPM(){ return currentRPM; }//getCurrentRPM()
+	
+	/**
+	 * Returns the max speed according to the current RPM this engine is performing at.
+	 * @return A double containing the current RPM.
+	 */
+	public double getCurrentRPMMaxSpeed(){ return currentRPMMaxSpeed; }//getCurrentRPMMaxSpeed()
 	
 	/**
 	 * Returns whether the engine is currently on or not.

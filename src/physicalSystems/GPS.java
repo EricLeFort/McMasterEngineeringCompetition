@@ -106,4 +106,10 @@ public class GPS{
 	 */
 	public synchronized double getAltitude(){ return altitude; }//getAltitude()
 	
+	/**
+	 * Returns the altitude of ground level. Assumes the altitude is measured from sea level and can therefore be negative.
+	 * @return The current altitude.
+	 */
+	public synchronized double getGroundLevel(){ return groundLevel; }//getGroundLevel()
+	
 }//GPS
