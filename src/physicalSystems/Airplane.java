@@ -9,11 +9,13 @@ public class Airplane implements Runnable{
 	private Wings wings;
 	private GPS gps;
 	private Gyrocompass gyrocompass;
+	private double samplingTime;
 	private int currentSpeed;
 	private boolean seatbeltsOn, inFlight;
 
-	public Airplane(Engine[] engines, Wings wings, Gyrocompass gyrocompass, GPS gps){
+	public Airplane(Engine[] engines, Wings wings, Gyrocompass gyrocompass, GPS gps, double samplingTime){
 		//TODO implement
+		this.samplingTime = samplingTime;
 		currentSpeed = 0;
 		seatbeltsOn = false;
 		inFlight = true;
@@ -53,8 +55,17 @@ public class Airplane implements Runnable{
 			engines[i].setCurrentRPM(engines[i].getMaxRPM());
 		}
 		
+		
+		
 		try{ Thread.sleep(100); }catch(InterruptedException ie){ System.out.println(ie.getMessage()); }	//Waits 100 milliseconds to move.
 		//TODO implement
 	}//takeOff()
+	
+	/**
+	 * 
+	 */
+	public void move(){
+		
+	}//move()
 	
 }//Airplane

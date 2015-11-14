@@ -46,12 +46,13 @@ public class Engine{
 	}//turnOn()
 	
 	/**
-	 * Tries to turn this engine off. Throws an <code>IllegalStateException</code> if the engine is already off.
+	 * Tries to turn this engine off and sets its RPM to 0. Throws an <code>IllegalStateException</code> if the engine is already off.
 	 * @throws IllegalStateException
 	 */
 	public void turnOff() throws IllegalStateException{
 		if(!isOn){ throw new IllegalStateException("The engine is already off."); }
 		isOn = false;
+		currentRPM = 0;
 	}//turnOff()
 	
 	/**
