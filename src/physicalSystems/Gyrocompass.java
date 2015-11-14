@@ -7,7 +7,6 @@ package physicalSystems;
  * @version 1.0
  */
 public class Gyrocompass{
-	
 	private double direction, pitch;
 	
 	/**
@@ -56,7 +55,7 @@ public class Gyrocompass{
 	 * @param flapState - -90 -> 90 degrees, inclusive
 	 * @param timePassed - seconds, time since last update, positive
 	 */
-	public void updateDirection(double currentAcceleration, double currentSpeed, double flapState, long timePassed){
+	public void updateDirection(double currentAcceleration, double currentSpeed, double flapState, double timePassed){
 		if(currentSpeed < 0) {
 			throw new IllegalArgumentException("Current speed must be positive.");
 		} else if(flapState > 90 || flapState < -90) {
@@ -75,7 +74,7 @@ public class Gyrocompass{
 	 * @param currentSpeed - km/h, positive
 	 * @param timePassed - seconds, time since last update, positive
 	 */
-	public void updatePitch(double flapState, double currentSpeed, long timePassed){
+	public void updatePitch(double flapState, double currentSpeed, double timePassed){
 		if(currentSpeed < 0) {
 			throw new IllegalArgumentException("Current speed must be positive.");
 		} else if(flapState > 90 || flapState < -90) {

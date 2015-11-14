@@ -5,7 +5,6 @@ package physicalSystems;
  * @version 1.0
  */
 public class GPS{
-	
 	private double lat, lon, altitude;
 
 	/**
@@ -42,7 +41,7 @@ public class GPS{
 	 * @param currentSpeed - km/h, positive
 	 * @param timePassed - seconds, the time passed since the last update.
 	 */
-	public void updateLocation(double direction, double currentSpeed, long timePassed){
+	public void updateLocation(double direction, double currentSpeed, double timePassed){
 		if(direction >= 360 || direction < 0) {
 			throw new IllegalArgumentException("Direction must be within 0 and 360(exclusive).");
 		} else if(currentSpeed < 0) {
@@ -60,7 +59,7 @@ public class GPS{
 	 * @param currentSpeed - km/h, positive
 	 * @param timePassed - seconds, the time passed since the last update.
 	 */
-	public void updateAltitude(double pitch, double currentSpeed, long timePassed){
+	public void updateAltitude(double pitch, double currentSpeed, double timePassed){
 		if(pitch >= 90 || pitch <= -90) {
 			throw new IllegalArgumentException("Pitch must be between -90 and 90.");
 		} else if(currentSpeed < 0) {

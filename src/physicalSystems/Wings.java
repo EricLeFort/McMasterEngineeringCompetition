@@ -5,14 +5,13 @@ package physicalSystems;
  * @author Christopher McDonald, Eric Le Fort
  * @version 1.0
  */
-public class Wings {
-	
+public class Wings{
 	private double flapPositionL, flapPositionR;
 	
 	/**
 	 * Creates a new set of Wings with standardized angles (0 degrees). 
 	 */
-	public Wings() {
+	public Wings(){
 		flapPositionL = 0;
 		flapPositionR = 0;
 	}//Constructor()
@@ -22,8 +21,8 @@ public class Wings {
 	 * @param leftWing
 	 * @param rightWing
 	 */
-	public Wings(double leftWing, double rightWing) {
-		if((-45 >= leftWing && leftWing >= 45) && (-45 >= leftWing && leftWing >= 45)) {
+	public Wings(double leftWing, double rightWing){
+		if((-45 >= leftWing && leftWing >= 45) && (-45 >= leftWing && leftWing >= 45)){
 			throw new IllegalArgumentException("Wings cannot be further than 45 (or -45) degrees turned.");
 		}
 		flapPositionL = leftWing;
@@ -34,7 +33,7 @@ public class Wings {
 	 * Returns the Difference in Wing angles to find left/right drag. 
 	 * @return double
 	 */
-	public double getDifference() {
+	public double getDifference(){
 		return flapPositionL - flapPositionR;
 	}//getDifference()
 	
@@ -42,7 +41,7 @@ public class Wings {
 	 * Returns the average of the Wing angles to find up/down drag.
 	 * @return double
 	 */
-	public double getAverage() {
+	public double getAverage(){
 		return (flapPositionL + flapPositionR)/2;
 	}//getAverage()
 	
@@ -51,8 +50,8 @@ public class Wings {
 	 * @param newAngle
 	 * @throws IllegalArgumentException
 	 */
-	public void setLeftAngle(double newAngle) {
-		if(-45 >= newAngle && newAngle >= 45) {
+	public void setLeftAngle(double newAngle){
+		if(-45 >= newAngle && newAngle >= 45){
 			throw new IllegalArgumentException("Wings cannot be further than 45 (or -45) degrees turned.");
 		}
 		flapPositionL = newAngle;
@@ -63,8 +62,8 @@ public class Wings {
 	 * @param newAngle
 	 * @throws IllegalArgumentException
 	 */
-	public void setRightAngle(double newAngle) {
-		if(-45 >= newAngle && newAngle >= 45) {
+	public void setRightAngle(double newAngle){
+		if(-45 >= newAngle && newAngle >= 45){
 			throw new IllegalArgumentException("Wings cannot be further than 45 (or -45) degrees turned.");
 		}
 		flapPositionR = newAngle;
