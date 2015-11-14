@@ -61,7 +61,9 @@ public class Gyrocompass{
 			throw new IllegalArgumentException("Current speed must be positive.");
 		} else if(flapState > 90 || flapState < -90) {
 			throw new IllegalArgumentException("Flapstate must be between 90 and -90 inclusive.");
-		} 
+		} else if(timePassed < 0) {
+			throw new IllegalArgumentException("TimePassed must be a positive value.");
+		}
 		double c = 0.5;																							//TODO Change to Realistic 
 		currentSpeed = currentSpeed / 3.6;
 		direction += c * flapState * ((currentSpeed * timePassed) + (currentAcceleration * timePassed * timePassed));
@@ -78,7 +80,9 @@ public class Gyrocompass{
 			throw new IllegalArgumentException("Current speed must be positive.");
 		} else if(flapState > 90 || flapState < -90) {
 			throw new IllegalArgumentException("Flapstate must be between 90 and -90 inclusive.");
-		} 
+		} else if(timePassed < 0) {
+			throw new IllegalArgumentException("TimePassed must be a positive value.");
+		}
 		double c = 0.5;																							//TODO Change to Realistic
 		pitch += c * flapState * currentSpeed;
 	}//updatePitch()

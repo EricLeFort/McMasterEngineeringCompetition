@@ -1,9 +1,9 @@
 package physicalSystems;
+
 /**
  * @author Eric Le Fort, Christopher McDonald
  * @version 1.0
  */
-
 public class GPS{
 	private double lat, lon, altitude;
 
@@ -42,7 +42,15 @@ public class GPS{
 	 * @param timePassed - seconds, the time passed since the last update.
 	 */
 	public void updateLocation(double direction, double currentSpeed, long timePassed){
-		//TODO implement
+		if(direction >= 360 || direction < 0) {
+			throw new IllegalArgumentException("Direction must be within 0 and 360(exclusive).");
+		} else if(currentSpeed < 0) {
+			throw new IllegalArgumentException("Speed must be positive.");
+		} else if(timePassed < 0) {
+			throw new IllegalArgumentException("TimePassed must be positive.");
+		}
+		lon += currentSpeed * Math.cos(direction) * timePassed;
+		lat += currentSpeed * Math.sin(direction) * timePassed;
 	}//updateLocation()
 	
 	/**
@@ -52,7 +60,14 @@ public class GPS{
 	 * @param timePassed - seconds, the time passed since the last update.
 	 */
 	public void updateAltitude(double pitch, double currentSpeed, long timePassed){
-		//TODO implement
+		if(pitch >= 90 || pitch <= -90) {
+			throw new IllegalArgumentException("Pitch must be between -90 and 90.");
+		} else if(currentSpeed < 0) {
+			throw new IllegalArgumentException("Speed must be positive.");
+		} else if(timePassed < 0) {
+			throw new IllegalArgumentException("TimePassed must be positive.");
+		}
+		altitude += Math.sin(pitch) * currentSpeed * timePassed;
 	}//updateAltitude()
 	
 	/**
