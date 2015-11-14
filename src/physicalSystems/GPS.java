@@ -78,18 +78,18 @@ public class GPS{
 	 * Returns the current latitude value represented through a cartesian coordinate system.
 	 * @return The current latitude.
 	 */
-	public double getLat(){ return lat; }//getLat()
+	public synchronized double getLat(){ return lat; }//getLat()
 	
 	/**
 	 * Returns the current longitude value represented through a cartesian coordinate system.
 	 * @return The current longitude.
 	 */
-	public double getLon(){ return lon; }//getLon()
+	public synchronized double getLon(){ return lon; }//getLon()
 	
 	/**
 	 * Returns the current altitude. Assumes the altitude is measured from sea level and can therefore be negative.
 	 * @return The current altitude.
 	 */
-	public double getAltitude(){ return altitude; }//getAltitude()
+	public synchronized double getAltitude(){ return altitude; }//getAltitude()
 	
 }//GPS
