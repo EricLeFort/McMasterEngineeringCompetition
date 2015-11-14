@@ -49,17 +49,18 @@ public class GPS{
 		} else if(timePassed < 0) {
 			throw new IllegalArgumentException("TimePassed must be positive.");
 		}
-		lon += currentSpeed * Math.cos(direction) * timePassed;
-		lat += currentSpeed * Math.sin(direction) * timePassed;
+		lon += currentSpeed / 3.6 * Math.cos(direction) * timePassed;
+		lat += currentSpeed / 3.6 * Math.sin(direction) * timePassed;
 	}//updateLocation()
 	
 	/**
 	 * Takes the current altitude and alters it according to the states passed in over the given interval.
 	 * @param pitch - 
 	 * @param currentSpeed - km/h, positive
+	 * @param minClimbSpeed- km/h, 
 	 * @param timePassed - seconds, the time passed since the last update.
 	 */
-	public void updateAltitude(double pitch, double currentSpeed, double timePassed){
+	public void updateAltitude(double pitch, double currentSpeed, double minClimbSpeed, double timePassed){
 		if(pitch >= 90 || pitch <= -90) {
 			throw new IllegalArgumentException("Pitch must be between -90 and 90.");
 		} else if(currentSpeed < 0) {
@@ -67,7 +68,10 @@ public class GPS{
 		} else if(timePassed < 0) {
 			throw new IllegalArgumentException("TimePassed must be positive.");
 		}
-		altitude += Math.sin(pitch) * currentSpeed * timePassed;
+		
+		if(!(currentSpeed < minClimbSpeed)){										//If the plane is too slow, no vertical climbing.
+			altitude += Math.sin(pitch) * currentSpeed / 3.6 * timePassed;
+		}
 	}//updateAltitude()
 	
 	/**
