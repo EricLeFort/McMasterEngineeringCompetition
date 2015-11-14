@@ -33,17 +33,13 @@ public class Wings{
 	 * Returns the Difference in Wing angles to find left/right drag. 
 	 * @return double
 	 */
-	public double getDifference(){
-		return flapPositionL - flapPositionR;
-	}//getDifference()
+	public double getDifference(){ return flapPositionL - flapPositionR; }//getDifference()
 	
 	/**
 	 * Returns the average of the Wing angles to find up/down drag.
 	 * @return double
 	 */
-	public double getAverage(){
-		return (flapPositionL + flapPositionR)/2;
-	}//getAverage()
+	public double getAverage(){ return (flapPositionL + flapPositionR)/2; }//getAverage()
 	
 	/**
 	 * Sets Left Wing Angle to newAngle
