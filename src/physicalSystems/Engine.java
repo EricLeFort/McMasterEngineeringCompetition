@@ -35,9 +35,6 @@ public class Engine{
 		}
 		currentRPM = newRPM;
 		currentRPMMaxSpeed = currentRPM / 5;
-		if(currentRPM != 7500 && currentRPM != 5625){
-			currentRPM = 0;//TODO fuck that!
-		}
 	}//setCurrentRPM()
 	
 	/**

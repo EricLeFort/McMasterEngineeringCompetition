@@ -75,7 +75,7 @@ public class GUI{
 			engineUpBtns[i] = new JButton("+100");
 			engineUpBtns[i].addActionListener(addEngBtnListener(i, true));
 			engineDownBtns[i] = new JButton("-100");
-			engineUpBtns[i].addActionListener(addEngBtnListener(i, false));
+			engineDownBtns[i].addActionListener(addEngBtnListener(i, false));
 			
 			engineLblPanels[i].add(engineMaxRPMLbls[i]);
 			engineLblPanels[i].add(engineCurrentRPMLbls[i]);
