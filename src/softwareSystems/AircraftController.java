@@ -17,8 +17,7 @@ public class AircraftController{
 				new Engine(7500)
 		};
 		
-		airplane = new Airplane(engines, new Wings(), new Gyrocompass(), new GPS(), 278,
-				39000, 0.1);
+		airplane = new Airplane(engines, new Wings(), new Gyrocompass(), new GPS(), 278, 39000, 0.1, gui);
 		
 		new Thread(airplane).start();
 	}//main()

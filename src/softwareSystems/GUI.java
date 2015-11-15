@@ -127,5 +127,15 @@ public class GUI{
 		};//new ActionListener()
 		return listener;
 	}//addBoardButtonListener()
+	
+	public void updateLbls(double altitude, double direction, double pitch, double lat, double lon, double speed, 
+			double engine1RPM, double engine2RPM, double engine3RPM, double engine4RPM){
+		altitudeLbl.setText("Altitude: " + altitude);
+		directionLbl.setText("Direction: " + direction);
+		pitchLbl.setText("Pitch: " + pitch);
+		lonLbl.setText("Lat(X): " + lat);
+		latLbl.setText("Lon(Y): " + lon);
+		speedLbl.setText("Speed: " + speed);
+	}//updateLbls()
 }//GUI
 

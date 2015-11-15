@@ -84,7 +84,6 @@ public class Gyrocompass{
 		}
 		double c = 0.000001;
 		pitch += c * -flapState * currentSpeed;
-		System.out.println(pitch);
 	}//updatePitch()
 	
 	/**

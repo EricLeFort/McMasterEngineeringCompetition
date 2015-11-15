@@ -3,9 +3,11 @@ package physicalSystems;
  * @author Eric Le Fort
  * @version 1.0
  */
+import softwareSystems.GUI;
 
 public class Airplane implements Runnable{
 	private final double minClimbSpeed;
+	private GUI gui;
 	private Engine[] engines;
 	private Wings wings;
 	private GPS gps;
@@ -15,7 +17,7 @@ public class Airplane implements Runnable{
 	private boolean seatbeltsOn, inFlight;
 
 	public Airplane(Engine[] engines, Wings wings, Gyrocompass gyrocompass, GPS gps, double minClimbSpeed,
-			int cruisingAltitude, double samplingTime){
+			int cruisingAltitude, double samplingTime, GUI gui){
 		this.engines = engines;
 		this.wings = wings;
 		this.gyrocompass = gyrocompass;
@@ -23,6 +25,7 @@ public class Airplane implements Runnable{
 		this.minClimbSpeed = minClimbSpeed;
 		this.cruisingAltitude = cruisingAltitude;
 		this.samplingTime = samplingTime;
+		this.gui = gui;
 		speed = acceleration = 0;
 		seatbeltsOn = false;
 		inFlight = true;
@@ -40,7 +43,6 @@ public class Airplane implements Runnable{
 			}
 			
 			try{
-				System.out.println("Altitude: " + gps.getAltitude() + "   X: " + gps.getLon() + "   Y: " + gps.getLat());
 				Thread.sleep(100);
 			}catch(InterruptedException ie){ System.out.println(ie.getMessage()); }	//Waits 100 milliseconds to move.
 		}
@@ -106,6 +108,10 @@ public class Airplane implements Runnable{
 		
 		gyrocompass.updateDirection(acceleration, speed, wings.getDifference(), samplingTime);
 		gyrocompass.updatePitch(wings.getAverage(), speed, samplingTime);
+		
+		gui.updateLbls(gps.getAltitude(), gyrocompass.getDirection(), gyrocompass.getPitch(), gps.getLat(),
+				gps.getLon(), speed, engines[0].getCurrentRPM(), engines[1].getCurrentRPM(),
+				engines[2].getCurrentRPM(), engines[3].getCurrentRPM());
 	}//move()
 	
 }//Airplane
