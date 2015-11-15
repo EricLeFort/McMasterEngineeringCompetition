@@ -66,6 +66,7 @@ public class Gyrocompass{
 		double c = 0.5;																							//TODO Change to Realistic 
 		currentSpeed = currentSpeed / 3.6;
 		direction += c * flapState * ((currentSpeed * timePassed) + (currentAcceleration * timePassed * timePassed));
+		direction %= 360;
 	}//updateDirection()
 	
 	/**
@@ -75,6 +76,7 @@ public class Gyrocompass{
 	 * @param timePassed - seconds, time since last update, positive
 	 */
 	public synchronized void updatePitch(double flapState, double currentSpeed, double timePassed){
+		double newPitch, c = 0.000001;
 		if(currentSpeed < 0) {
 			throw new IllegalArgumentException("Current speed must be positive.");
 		} else if(flapState > 90 || flapState < -90) {
@@ -82,8 +84,15 @@ public class Gyrocompass{
 		} else if(timePassed < 0) {
 			throw new IllegalArgumentException("TimePassed must be a positive value.");
 		}
-		double c = 0.000001;
-		pitch += c * -flapState * currentSpeed;
+		
+		newPitch = pitch + c * -flapState * currentSpeed;
+		if(newPitch > 90){
+			pitch = 90;
+		}else if(newPitch < -90){
+			pitch = -90;
+		}else{
+			pitch = newPitch;
+		}
 	}//updatePitch()
 	
 	/**
