@@ -119,4 +119,28 @@ public class Airplane implements Runnable{
 	
 	public void setGUI(GUI gui){ this.gui = gui; }//setGUI()
 	
+	/**
+	 * 
+	 * @param engineNumber
+	 * @param deltaRPM
+	 */
+	public void setEngineRPM(int engineNumber, double deltaRPM) {
+		engines[engineNumber].setCurrentRPM(engines[engineNumber].getCurrentRPM() + deltaRPM);
+	}
+	
+	/**
+	 * 
+	 * @param deltaAngle
+	 */
+	public void setLeftFlap(double deltaAngle) {
+		wings.setLeftAngle(wings.getLeftAngle() + deltaAngle);
+	}
+	
+	/**
+	 * 
+	 * @param deltaAngle
+	 */
+	public void setRightFlap(double deltaAngle) {
+		wings.setRightAngle(wings.getRightAngle() + deltaAngle);
+	}
 }//Airplane
