@@ -21,7 +21,6 @@ public class Gyrocompass{
 	 * Creates new GyroCompass with a standardized pitch and a specified direction.
 	 * Direction must be within 0 to 360.
 	 * @param startDirection - Starting Direction of Airplane
-	 * @throws AngleOutOfBoundsException 
 	 */
 	public Gyrocompass(double startDirection){
 		if(startDirection >= 0 && startDirection < 360){											// Runs if 0 -> startDirection -> 360
@@ -37,7 +36,6 @@ public class Gyrocompass{
 	 * Direction must be within 0 to 360(exclusive) and Pitch must be within -90 and 90.
 	 * @param startDirection - degrees, starting Direction of Airplane
 	 * @param startPitch - degrees, starting Pitch of Airplane
-	 * @throws AngleOutOfBoundsException 
 	 */
 	public Gyrocompass(double startDirection, double startPitch){
 		if( (startDirection >= 0 && startDirection < 360) && (startPitch <= 90 && startPitch >= -90) ){
@@ -52,7 +50,7 @@ public class Gyrocompass{
 	 * Takes the current direction and alters it according to the states passed in.
 	 * @param currentAcceleration, m/s/s
 	 * @param currentSpeed - km/h, positive
-	 * @param flapState - -90 -> 90 degrees, inclusive
+	 * @param flapState - -90 - 90 degrees, inclusive
 	 * @param timePassed - seconds, time since last update, positive
 	 */
 	public synchronized void updateDirection(double currentAcceleration, double currentSpeed, double flapState, double timePassed){
@@ -71,7 +69,7 @@ public class Gyrocompass{
 	
 	/**
 	 * Takes the current pitch and alters it according to the states passed in.
-	 * @param flapState - -90 -> 90 degrees, inclusive
+	 * @param flapState - -90 - 90 degrees, inclusive
 	 * @param currentSpeed - km/h, positive
 	 * @param timePassed - seconds, time since last update, positive
 	 */

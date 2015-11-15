@@ -42,7 +42,7 @@ public class GPS{
 	
 	/**
 	 * Takes the current latitude and longitude and alters them according to the states passed in over the given interval.
-	 * @param direction - degrees, 0 -> 360, not inclusive on the 360 degree end.
+	 * @param direction - degrees, 0 - 360, not inclusive on the 360 degree end.
 	 * @param currentSpeed - km/h, positive
 	 * @param timePassed - seconds, the time passed since the last update.
 	 */

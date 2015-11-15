@@ -206,7 +206,7 @@ public class JDBConnection{
 
 	/**
 	 * Performs a query on the database.
-	 * @param stmt - Query to be processed.
+	 * @param query - Query to be processed.
 	 * @return A 2-D array containing all results of the given query.
 	 */
 	public String[][] executeQuery(String query) {
