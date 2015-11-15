@@ -3,10 +3,11 @@ package physicalSystems;
  * @author Eric Le Fort
  * @version 1.0
  */
-
+import softwareSystems.GUI;
 public class Airplane implements Runnable{
 	private final double maxSpeed;
 	private final double minClimbSpeed;
+	private GUI gui;
 	private Engine[] engines;
 	private Wings wings;
 	private GPS gps;
@@ -42,7 +43,6 @@ public class Airplane implements Runnable{
 			}
 			
 			try{
-				System.out.println("Altitude: " + gps.getAltitude() + "   X: " + gps.getLon() + "   Y: " + gps.getLat());
 				Thread.sleep((long)samplingTime * 1000);
 			}catch(InterruptedException ie){ System.out.println(ie.getMessage()); }	//Waits 100 milliseconds to move.
 		}
@@ -75,10 +75,17 @@ public class Airplane implements Runnable{
 		
 		while(gps.getAltitude() < altitude){
 			move();
+			
+			if(gyrocompass.getPitch() > 45){
+				wings.setLeftAngle(0);
+				wings.setRightAngle(0);
+			}
+			
 			try{
-				Thread.sleep((long)samplingTime * 1000);
+				Thread.sleep(5);
 			}catch(InterruptedException ie){ System.out.println(ie.getMessage()); }	//Waits 100 milliseconds to move.
 		}
+		gyrocompass.setPitch(0);//TODO hardcoding
 		
 		for(int i = 0; i < engines.length; i++){
 			engines[i].setCurrentRPM(engines[i].getMaxRPM() * 3 / 4);
@@ -105,6 +112,12 @@ public class Airplane implements Runnable{
 		
 		gyrocompass.updateDirection(acceleration, speed, wings.getDifference(), samplingTime);
 		gyrocompass.updatePitch(wings.getAverage(), speed, samplingTime);
+		
+		gui.updateLbls(gps.getAltitude(), gyrocompass.getDirection(), gyrocompass.getPitch(), gps.getLat(),
+				gps.getLon(), speed, engines[0].getCurrentRPM(), engines[1].getCurrentRPM(),
+				engines[2].getCurrentRPM(), engines[3].getCurrentRPM());
 	}//move()
+	
+	public void setGUI(GUI gui){ this.gui = gui; }//setGUI()
 	
 }//Airplane

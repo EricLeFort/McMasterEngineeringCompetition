@@ -33,7 +33,7 @@ public class GPS{
 	 * @param altitude
 	 * @param groundLevel
 	 */
-	public GPS(double lat, double lon, double altitude, double groudLevel){
+	public GPS(double lat, double lon, double altitude, double groundLevel){
 		this.lat = lat;
 		this.lon = lon;
 		this.altitude = altitude;
@@ -68,7 +68,7 @@ public class GPS{
 	 */
 	public synchronized void updateAltitude(double pitch, double currentSpeed, double minClimbSpeed, double timePassed){
 		double difference;
-		if(pitch >= 90 || pitch <= -90) {
+		if(pitch > 90 || pitch < -90) {
 			throw new IllegalArgumentException("Pitch must be between -90 and 90.");
 		} else if(currentSpeed < 0) {
 			throw new IllegalArgumentException("Speed must be positive.");

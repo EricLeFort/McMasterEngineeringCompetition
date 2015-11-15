@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import physicalSystems.Airplane;
 
 public class GUI{
 	private JFrame main;
@@ -15,8 +16,11 @@ public class GUI{
 	private JButton engineUpBtns[], engineDownBtns[], lPitchUp, lPitchDown, rPitchUp, rPitchDown;
 	private JLabel altitudeLbl, directionLbl, latLbl, lonLbl, speedLbl, pitchLbl, engineMaxRPMLbls[],
 		engineCurrentRPMLbls[], lPitchLbl, rPitchLbl;
+	private Airplane airplane;
 
-	public GUI(){
+	public GUI(Airplane airplane){
+		this.airplane = airplane;
+		
 		main = new JFrame();									//Initializing main Panels/frame.
 		infoPanel = new JPanel();
 		engineControlPanel = new JPanel();
@@ -33,22 +37,22 @@ public class GUI{
 		
 		altitudeLbl = new JLabel("Altitude: " + 0);				//Initializing and adding upper info labels.
 		altitudeLbl.setHorizontalAlignment(JLabel.CENTER);
-		infoPanel.add(altitudeLbl);
-		directionLbl = new JLabel("Direction: " + 0);
-		directionLbl.setHorizontalAlignment(JLabel.CENTER);
-		infoPanel.add(directionLbl);
-		pitchLbl = new JLabel("Pitch: " + 0);
-		pitchLbl.setHorizontalAlignment(JLabel.CENTER);
-		infoPanel.add(pitchLbl);
-		latLbl = new JLabel("Lat(X): " + 0);
-		latLbl.setHorizontalAlignment(JLabel.CENTER);
-		infoPanel.add(latLbl);
-		lonLbl = new JLabel("Lat(Y): " + 0);
-		lonLbl.setHorizontalAlignment(JLabel.CENTER);
-		infoPanel.add(lonLbl);
+		infoPanel.add(altitudeLbl, 0);
 		speedLbl = new JLabel("Speed: " + 0);
 		speedLbl.setHorizontalAlignment(JLabel.CENTER);
-		infoPanel.add(speedLbl);
+		infoPanel.add(speedLbl, 1);
+		directionLbl = new JLabel("Direction: " + 0);
+		directionLbl.setHorizontalAlignment(JLabel.CENTER);
+		infoPanel.add(directionLbl, 2);
+		latLbl = new JLabel("Lat(X): " + 0);
+		latLbl.setHorizontalAlignment(JLabel.CENTER);
+		infoPanel.add(latLbl, 3);
+		pitchLbl = new JLabel("Pitch: " + 0);
+		pitchLbl.setHorizontalAlignment(JLabel.CENTER);
+		infoPanel.add(pitchLbl, 4);
+		lonLbl = new JLabel("Lat(Y): " + 0);
+		lonLbl.setHorizontalAlignment(JLabel.CENTER);
+		infoPanel.add(lonLbl, 5);
 		
 		
 		engineControlBoxes = new JPanel[4];						//Initializing engine panel components.
@@ -60,8 +64,8 @@ public class GUI{
 		engineMaxRPMLbls = new JLabel[4];
 		engineCurrentRPMLbls = new JLabel[4];
 		for(int i = 0; i < 4; i++){
-			engineMaxRPMLbls[i] = new JLabel("Max RPM: " + 0);
-			engineCurrentRPMLbls[i] = new JLabel("Current RPM: " + 0);
+			engineMaxRPMLbls[i] = new JLabel("Max RPM: " + 7500);
+			engineCurrentRPMLbls[i] = new JLabel("RPM: " + 0);
 			engineControlBoxes[i] = new JPanel();
 			engineControlBoxes[i].setLayout(new GridLayout(2, 1));
 			engineBtnPanels[i] = new JPanel();
@@ -116,12 +120,10 @@ public class GUI{
 		main.setVisible(true);
 	}//Constructor
 
-	private ActionListener addBoardButtonListener(int x, int y){
+	private ActionListener addEngBtnUpListener(){
 		ActionListener listener = new ActionListener(){
 			public synchronized void actionPerformed(ActionEvent e){
-				JButton btn = (JButton) e.getSource();
-				String text = btn.getText();
-				btn.setText("pressed.");
+				//airplane.
 						
 			}//actionPerformed()
 		};//new ActionListener()
@@ -136,6 +138,11 @@ public class GUI{
 		lonLbl.setText("Lat(X): " + lat);
 		latLbl.setText("Lon(Y): " + lon);
 		speedLbl.setText("Speed: " + speed);
+		
+		engineCurrentRPMLbls[0].setText("RPM: " + engine1RPM);
+		engineCurrentRPMLbls[1].setText("RPM: " + engine2RPM);
+		engineCurrentRPMLbls[2].setText("RPM: " + engine3RPM);
+		engineCurrentRPMLbls[3].setText("RPM: " + engine4RPM);
 	}//updateLbls()
 }//GUI
 
