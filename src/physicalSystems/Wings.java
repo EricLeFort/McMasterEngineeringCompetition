@@ -65,8 +65,8 @@ public class Wings{
 		flapPositionR = newAngle;
 	}//setRightAngle()
 	
-	public double getLeftAngle(){ return flapPositionL;}//getLeft
+	public double getLeftAngle(){ return flapPositionL; }//getLeft
 	
-	public double getRightAngle(){ return flapPositionR;}//getRight
+	public double getRightAngle(){ return flapPositionR; }//getRight
 	
 }//Wings

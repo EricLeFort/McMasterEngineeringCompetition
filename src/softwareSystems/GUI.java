@@ -73,7 +73,9 @@ public class GUI{
 			engineLblPanels[i] = new JPanel();
 			engineLblPanels[i].setLayout(new GridLayout(1, 2));
 			engineUpBtns[i] = new JButton("+100");
+			engineUpBtns[i].addActionListener(addEngBtnListener(i, true));
 			engineDownBtns[i] = new JButton("-100");
+			engineUpBtns[i].addActionListener(addEngBtnListener(i, false));
 			
 			engineLblPanels[i].add(engineMaxRPMLbls[i]);
 			engineLblPanels[i].add(engineCurrentRPMLbls[i]);
@@ -90,12 +92,16 @@ public class GUI{
 		lPitchLbl = new JLabel("Left pitch: " + 0);				//Initializing flap control components.
 		lPitchLbl.setHorizontalAlignment(JLabel.CENTER);
 		lPitchUp = new JButton("+");
+		lPitchUp.addActionListener(addEngLeftFlapListener(true));
 		lPitchDown = new JButton("-");
+		lPitchDown.addActionListener(addEngLeftFlapListener(false));
 		
 		rPitchLbl = new JLabel("Right Pitch: " + 0);
 		rPitchLbl.setHorizontalAlignment(JLabel.CENTER);
 		rPitchUp = new JButton("+");
+		rPitchUp.addActionListener(addEngRightFlapListener(true));
 		rPitchDown = new JButton("-");
+		rPitchDown.addActionListener(addEngRightFlapListener(false));
 		
 		lPitchBtnPanel.setLayout(new GridLayout(2, 1));
 		lPitchBtnPanel.add(lPitchUp);
@@ -120,15 +126,47 @@ public class GUI{
 		main.setVisible(true);
 	}//Constructor
 
-	private ActionListener addEngBtnUpListener(int num){
+	
+	private ActionListener addEngBtnListener(int num, boolean up){
 		ActionListener listener = new ActionListener(){
 			public synchronized void actionPerformed(ActionEvent e){
-				airplane.setEngineRPM(num, 100);
-						
+				if(up){
+					airplane.setEngineRPM(num, 100);
+				}else{
+					airplane.setEngineRPM(num, -100);
+				}
 			}//actionPerformed()
 		};//new ActionListener()
 		return listener;
 	}//addBoardButtonListener()
+	
+	private ActionListener addEngLeftFlapListener(boolean up){
+		ActionListener listener = new ActionListener(){
+			public synchronized void actionPerformed(ActionEvent e){
+				if(up){
+					airplane.setLeftFlap(1);
+				}else{
+					airplane.setLeftFlap(-1);
+				}
+			}//actionPerformed()
+		};//new ActionListener()
+		return listener;
+	}//addBoardButtonListener()
+	
+	private ActionListener addEngRightFlapListener(boolean up){
+		ActionListener listener = new ActionListener(){
+			public synchronized void actionPerformed(ActionEvent e){
+				if(up){
+					airplane.setRightFlap(1);
+					
+				}else{
+					airplane.setRightFlap(-1);
+				}
+			}//actionPerformed()
+		};//new ActionListener()
+		return listener;
+	}//addBoardButtonListener()
+	
 	
 	public void updateLbls(double altitude, double direction, double pitch, double lat, double lon, double speed, 
 			double engine1RPM, double engine2RPM, double engine3RPM, double engine4RPM){
@@ -143,6 +181,9 @@ public class GUI{
 		engineCurrentRPMLbls[1].setText("RPM: " + engine2RPM);
 		engineCurrentRPMLbls[2].setText("RPM: " + engine3RPM);
 		engineCurrentRPMLbls[3].setText("RPM: " + engine4RPM);
+		
+		lPitchLbl.setText("Left Pitch: " + airplane.getLeftFlapAngle());
+		rPitchLbl.setText("Right Pitch: " + airplane.getRightFlapAngle());
 	}//updateLbls()
 }//GUI
 
