@@ -116,5 +116,4 @@ public class Gyrocompass{
 	 */
 	public double getDirection(){ return direction; }//getDirection()
 	
-	public void setPitch(double pitch){this.pitch = pitch;}//TODO hardcoding
 }//Gyrocompass

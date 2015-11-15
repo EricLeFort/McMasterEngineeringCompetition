@@ -120,10 +120,10 @@ public class GUI{
 		main.setVisible(true);
 	}//Constructor
 
-	private ActionListener addEngBtnUpListener(){
+	private ActionListener addEngBtnUpListener(int num){
 		ActionListener listener = new ActionListener(){
 			public synchronized void actionPerformed(ActionEvent e){
-				//airplane.
+				airplane.setEngineRPM(num, 100);
 						
 			}//actionPerformed()
 		};//new ActionListener()

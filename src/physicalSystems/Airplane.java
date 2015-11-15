@@ -43,7 +43,7 @@ public class Airplane implements Runnable{
 			}
 			
 			try{
-				Thread.sleep((long)samplingTime * 1000);
+				Thread.sleep(5);
 			}catch(InterruptedException ie){ System.out.println(ie.getMessage()); }	//Waits 100 milliseconds to move.
 		}
 	}//run()
@@ -73,7 +73,7 @@ public class Airplane implements Runnable{
 			engines[i].setCurrentRPM(engines[i].getMaxRPM());
 		}
 		
-		while(gps.getAltitude() < altitude){
+		while(gps.getAltitude() < altitude - 10000){								//Releases the aircraft when it is close to altitude.
 			move();
 			
 			if(gyrocompass.getPitch() > 45){
@@ -85,7 +85,6 @@ public class Airplane implements Runnable{
 				Thread.sleep(5);
 			}catch(InterruptedException ie){ System.out.println(ie.getMessage()); }	//Waits 100 milliseconds to move.
 		}
-		gyrocompass.setPitch(0);//TODO hardcoding
 		
 		for(int i = 0; i < engines.length; i++){
 			engines[i].setCurrentRPM(engines[i].getMaxRPM() * 3 / 4);
