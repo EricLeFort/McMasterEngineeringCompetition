@@ -1,0 +1,105 @@
+\documentclass[titlepage]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{makeidx}
+\usepackage{graphicx}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage[margin=1.25in,footskip=0.25in]{geometry}
+\makeindex
+
+\title{McMaster Engineering Competition - Software Report}
+\author
+{
+	Spencer Deevy\\
+	deevys\\\\
+	Eric Le Fort\\
+	leforte\\\\
+	Christopher McDonald\\
+	chrismacc\\\\
+}
+\date{\today}
+
+\begin{document}
+\maketitle
+\newpage
+\tableofcontents
+\vfill \noindent
+{\large \bf Revision History}\\\\
+\textbf{Revision 0:} First draft of the McMaster Engineering Competition Software Report
+\newpage
+
+\section{Introduction}
+This section gives a scope description and overview of the unmanned aerial vehicle control software included in this software report. Also,
+the purpose for this document is described and a list of abbreviations and definitions is provided for uncommon words or acronyms.
+ 
+\subsection{Document Purpose}
+The purpose of this document is to provide a comprehensive description of the unmanned aerial vehicle control system software. The document targets an audience with minimal knowledge towards aircraft mechanics, to encompass as many groups as possible. It will go over the project scope, and definitions of uncommon words and acronyms present in the document. The document will then go over a general description of the unmanned aerial vehicle control system software, and contraints/assumptions that are to be used as a basis on for the specific system requirements.
+
+\subsection{Product Scope}
+The unmanned aerial vehicle control system software is an application to be used to model the flight dynamics of a fixed-wing aircraft. The software will model the following states of fixed-wing aircraft:
+
+\begin{itemize}
+\item Groundspeed\index{Groundspeed}
+\item Direction
+\item Pitch\index{Pitch}
+\item Landing gear status
+\item Seat belt light
+\item Global Positioning System\index{GPS}
+\item Gyrocompass\index{Gyrocompass}
+\item Turbine rotation speed
+\item Flap positioning
+\end{itemize}
+
+\subsection{Definitions}
+\begin{itemize}
+\item \textbf{GPS: } Global Positioning System; A sensor that utilizes satellite positioning to determine latitude and longitude.
+\item \textbf{Groundspeed: } The speed of the aircraft relative to the Earth's surface.
+\item \textbf{Gyrocompass: } A sensor that determines rotational movement about an origin, frequently measuring rotation around multiple axes; This particular device aligning its axis about the Earth's magnetic field line.
+\item \textbf{Pitch: } The angle of rotation about an axis running from wing to wing; Nose up/Nose down
+\item \textbf{UAV: } Unmanned Aerial Vehicle; An autonomous aircraft connected through a network for data transmission.
+\item \textbf{Windspeed: } The speed of the aircraft relative to the air. 
+\end{itemize}
+
+\subsection{Overview}
+The remainder of this document includes two chapters. The second chapter provides an overview of the UAV \index{UAV} and its functionality, as well as constraints and assumptions placed on the product. This is presented to provide an overview of the UAV\index{UAV} project functionality, and to provide a baseline for constraint placed on the system. The third chapter will provide system diagrams of the UAV\index{UAV} control system software.
+
+\section{General Description}
+This section will give an overview of the whole system. This chapter will contain information regarding stakeholders of the UAV\index{UAV} as well as constraints and assumptions being placed on the UAV\index{UAV} in order to lay the foundation for the following specific requirements.
+
+\subsection{Product Perspective}
+The system will consist of ane embedded application. The embedded application will be used to control the hardware input and output of the UAV\index{UAV}.\\\\
+The embedded application will need to communicate with a GPS\index{GPS}, a gyrocompass\index{Gyrocompass}, 3 rotary encoders + a rotary encoder for each turbine.
+The GPS\index{GPS} will provide a latitude and longitude to enable positioning of the aircraft as well as for speed calculations.
+The gyrocompass will be a 1-axis gyroscope with its axis aligned with the Earth's magnetic field, providing 1 rotation value: pitch\index{Pitch}, as well as the direction of the aircraft relative to the Earth's magnetic field line.\\\\
+Two rotary encoders will provide an angle at which the two wing flaps will be relative to the horizontal wing position. One rotary encoder will be monitoring the angle at which the landing gear is relative to the horizontal docking position of the landing gear legs (This docking position being when the legs are properly stowed inside the aircraft). The remaining rotary encoders will be for each of the turbines onboard the aircraft, which will be used to provide an RPM value for each of the turbines; These RPM values are then used to determine the current speed of the aircraft.
+ 
+\subsection{General Constraints}
+The UAV\index{UAV} control software is contrained by the mechanical and electrical properties of the UAV\index{UAV} itself.
+The control software expects digital signals within accepted values, and relies on the mechanical design of the UAV\index{UAV} to be correctly implemented so that motors deploy mechanisms properly. These properties of the UAV\index{UAV} are expected to be implemented properly by their respective designers.
+
+\subsection{Assumptions and Dependencies}
+It is assumed that electrical, and mechanical properties of the UAV\index{UAV} are implemented correctly in accordance with their respective design constraints.\\\\
+It is also assumed for this model that the windspeed\index{Windspeed} at the aircraft's altitude is 0 km/h.
+
+\section{Project Diagrams}
+This section contains all of the diagrams describing the functionality and arrangement of the UAV\index{UAV} control system software. 
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[scale=0.725]{general_diagram.png}
+\caption{UAV control system software general design}
+\end{center}
+\end{figure}
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[scale=0.55]{dataflow_diagram.png}
+\caption{UAV control system software general design}
+\end{center}
+\end{figure}
+
+\clearpage
+\addcontentsline{toc}{section}{Index}
+\printindex
+
+\end{document}
