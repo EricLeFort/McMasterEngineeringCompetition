@@ -3,11 +3,10 @@ package physicalSystems;
  * @author Eric Le Fort
  * @version 1.0
  */
-import softwareSystems.GUI;
 
 public class Airplane implements Runnable{
+	private final double maxSpeed;
 	private final double minClimbSpeed;
-	private GUI gui;
 	private Engine[] engines;
 	private Wings wings;
 	private GPS gps;
@@ -16,16 +15,16 @@ public class Airplane implements Runnable{
 	private int cruisingAltitude;
 	private boolean seatbeltsOn, inFlight;
 
-	public Airplane(Engine[] engines, Wings wings, Gyrocompass gyrocompass, GPS gps, double minClimbSpeed,
-			int cruisingAltitude, double samplingTime, GUI gui){
+	public Airplane(Engine[] engines, Wings wings, Gyrocompass gyrocompass, GPS gps, double maxSpeed, double minClimbSpeed,
+			int cruisingAltitude, double samplingTime){
 		this.engines = engines;
 		this.wings = wings;
 		this.gyrocompass = gyrocompass;
 		this.gps = gps;
+		this.maxSpeed = maxSpeed;
 		this.minClimbSpeed = minClimbSpeed;
 		this.cruisingAltitude = cruisingAltitude;
 		this.samplingTime = samplingTime;
-		this.gui = gui;
 		speed = acceleration = 0;
 		seatbeltsOn = false;
 		inFlight = true;
@@ -43,7 +42,8 @@ public class Airplane implements Runnable{
 			}
 			
 			try{
-				Thread.sleep(100);
+				System.out.println("Altitude: " + gps.getAltitude() + "   X: " + gps.getLon() + "   Y: " + gps.getLat());
+				Thread.sleep((long)samplingTime * 1000);
 			}catch(InterruptedException ie){ System.out.println(ie.getMessage()); }	//Waits 100 milliseconds to move.
 		}
 	}//run()
@@ -75,14 +75,8 @@ public class Airplane implements Runnable{
 		
 		while(gps.getAltitude() < altitude){
 			move();
-			
-			if(gyrocompass.getPitch() > 45){
-				wings.setLeftAngle(0);
-				wings.setRightAngle(0);
-			}
-			
 			try{
-				Thread.sleep(100);
+				Thread.sleep((long)samplingTime * 1000);
 			}catch(InterruptedException ie){ System.out.println(ie.getMessage()); }	//Waits 100 milliseconds to move.
 		}
 		
@@ -100,6 +94,9 @@ public class Airplane implements Runnable{
 		double oldSpeed = speed;
 		for(int i = 0; i < engines.length; i++){
 			speed += engines[i].getCurrentRPMMaxSpeed() / 120 / samplingTime;
+			if(speed > maxSpeed) {
+				speed = maxSpeed;
+			}
 		}
 		acceleration = (speed - oldSpeed) / samplingTime;
 		
@@ -108,10 +105,6 @@ public class Airplane implements Runnable{
 		
 		gyrocompass.updateDirection(acceleration, speed, wings.getDifference(), samplingTime);
 		gyrocompass.updatePitch(wings.getAverage(), speed, samplingTime);
-		
-		gui.updateLbls(gps.getAltitude(), gyrocompass.getDirection(), gyrocompass.getPitch(), gps.getLat(),
-				gps.getLon(), speed, engines[0].getCurrentRPM(), engines[1].getCurrentRPM(),
-				engines[2].getCurrentRPM(), engines[3].getCurrentRPM());
 	}//move()
 	
 }//Airplane
