@@ -14,7 +14,9 @@ public class GPSTest {
 		final double MAXRPM = 10000;
 		
 		engine[0] = new Engine(MAXRPM);
-		engine[1] = new Engine(MAXRPM);
+		engine[1] = new Engine(MAXRPM);	
+		engine[0].turnOn();
+		engine[1].turnOn();
 		engine[0].setCurrentRPM(2000);
 		engine[1].setCurrentRPM(2000);
 		System.out.println(gps.getLat());
@@ -56,6 +58,8 @@ public class GPSTest {
 		Engine[] engine = new Engine[2];
 		GPS gps = new GPS();
 		final double MAXRPM = 10000;
+		engine[0].turnOn();
+		engine[1].turnOn();
 		engine[0] = new Engine(MAXRPM);
 		engine[1] = new Engine(MAXRPM);
 		
@@ -67,5 +71,29 @@ public class GPSTest {
 		
 		gps.updateAltitude(40, 400, 200, 0.1);
 		assertEquals(gps.getAltitude(),9.042196,0.1);
+		
+		gps.updateAltitude(-30, 200, 100, 0.1);
+		assertEquals(gps.getAltitude(),6.264418,0.1);
+		
+		try {
+			gps.updateAltitude(-110, 400, 200, 0.1);
+			fail();
+		} catch(IllegalArgumentException e) {
+			//Passed, caught the correct error
+		}
+		
+		try {
+			gps.updateAltitude(110, -400, 200, 0.1);
+			fail();
+		} catch(IllegalArgumentException e) {
+			//Passed, caught the correct error
+		}
+		
+		try {
+			gps.updateAltitude(110, 400, 200, -0.1);
+			fail();
+		} catch(IllegalArgumentException e) {
+			//Passed, caught the correct error
+		}
 	}
 }
