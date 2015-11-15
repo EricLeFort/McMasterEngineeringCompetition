@@ -65,6 +65,7 @@ public class Airplane implements Runnable{
 	 * @param altitude - metres, double representing the desired altitude.
 	 */
 	public void takeOff(double altitude){
+		boolean trigger = true;
 		wings.setLeftAngle(-45);
 		wings.setRightAngle(-45);
 		
@@ -76,9 +77,10 @@ public class Airplane implements Runnable{
 		while(gps.getAltitude() < altitude - 10000){								//Releases the aircraft when it is close to altitude.
 			move();
 			
-			if(gyrocompass.getPitch() > 45){
+			if(gyrocompass.getPitch() > 45 && trigger){
 				wings.setLeftAngle(0);
 				wings.setRightAngle(0);
+				trigger = false;
 			}
 			
 			try{
@@ -97,13 +99,12 @@ public class Airplane implements Runnable{
 	 * Allows the sensors to update the aircraft's location based on the state of various other sensors.
 	 */
 	public void move(){
-		double oldSpeed = speed;
+		double oldSpeed = speed, averageRPM = 0;
 		for(int i = 0; i < engines.length; i++){
-			speed += engines[i].getCurrentRPMMaxSpeed() / 120 / samplingTime;
-			if(speed > maxSpeed) {
-				speed = maxSpeed;
-			}
+			averageRPM += engines[i].getCurrentRPM();
 		}
+		averageRPM /= (engines.length*5);
+		speed += (averageRPM - oldSpeed)*.01; 
 		acceleration = (speed - oldSpeed) / samplingTime;
 		
 		gps.updateAltitude(gyrocompass.getPitch(), speed, minClimbSpeed, samplingTime);
