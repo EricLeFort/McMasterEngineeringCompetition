@@ -143,4 +143,8 @@ public class Airplane implements Runnable{
 	public void setRightFlap(double deltaAngle) {
 		wings.setRightAngle(wings.getRightAngle() + deltaAngle);
 	}
+	
+	public double getLeftFlap() {return wings.getLeftAngle();}
+	
+	public double getRightFlap() {return wings.getRightAngle();}
 }//Airplane
