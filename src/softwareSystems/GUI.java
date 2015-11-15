@@ -126,7 +126,6 @@ public class GUI{
 		main.setVisible(true);
 	}//Constructor
 
-	
 	private ActionListener addEngBtnListener(int num, boolean up){
 		ActionListener listener = new ActionListener(){
 			public synchronized void actionPerformed(ActionEvent e){
@@ -167,7 +166,6 @@ public class GUI{
 		return listener;
 	}//addBoardButtonListener()
 	
-	
 	public void updateLbls(double altitude, double direction, double pitch, double lat, double lon, double speed, 
 			double engine1RPM, double engine2RPM, double engine3RPM, double engine4RPM){
 		altitudeLbl.setText("Altitude: " + altitude);
@@ -178,12 +176,13 @@ public class GUI{
 		speedLbl.setText("Speed: " + speed);
 		
 		engineCurrentRPMLbls[0].setText("RPM: " + engine1RPM);
+		System.out.println(engine1RPM);
 		engineCurrentRPMLbls[1].setText("RPM: " + engine2RPM);
 		engineCurrentRPMLbls[2].setText("RPM: " + engine3RPM);
 		engineCurrentRPMLbls[3].setText("RPM: " + engine4RPM);
 		
-		lPitchLbl.setText("Left Pitch: " + airplane.getLeftFlapAngle());
-		rPitchLbl.setText("Right Pitch: " + airplane.getRightFlapAngle());
+		lPitchLbl.setText("Left Pitch: " + airplane.getLeftFlap());
+		rPitchLbl.setText("Right Pitch: " + airplane.getRightFlap());
 	}//updateLbls()
 }//GUI
 

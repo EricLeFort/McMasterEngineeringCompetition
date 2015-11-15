@@ -16,7 +16,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Scanner;
 
 public class JDBConnection{
 	private final String host, user, pass, database;
@@ -38,8 +37,6 @@ public class JDBConnection{
 			connection.update("JavaStuff", new String[]{"Error"}, new String[]{"Eric v2.0"}, "`Error`='Eric'");
 			connection.delete("JavaStuff", "`Error`='Eric'");
 			
-			new Scanner(System.in).nextInt();
-			connection.dropTable("JavaStuff");
 		}catch(SQLException sqle){
 			sqle.printStackTrace();
 		}

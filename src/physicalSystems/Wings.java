@@ -59,7 +59,7 @@ public class Wings{
 	 * @throws IllegalArgumentException
 	 */
 	public void setRightAngle(double newAngle){
-		if(-45 >= newAngle && newAngle >= 45){
+		if(-45 > newAngle || newAngle > 45){
 			throw new IllegalArgumentException("Wings cannot be further than 45 (or -45) degrees turned.");
 		}
 		flapPositionR = newAngle;

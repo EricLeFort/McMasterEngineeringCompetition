@@ -66,7 +66,7 @@ public class Gyrocompass{
 		double c = 0.5;																							//TODO Change to Realistic 
 		currentSpeed = currentSpeed / 3.6;
 		direction += c * flapState * ((currentSpeed * timePassed) + (currentAcceleration * timePassed * timePassed));
-		direction %= 360;
+		direction = Math.abs(direction % 360);
 	}//updateDirection()
 	
 	/**
