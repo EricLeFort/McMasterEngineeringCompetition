@@ -10,71 +10,101 @@ import java.awt.event.ActionListener;
 
 public class GUI{
 	private JFrame main;
-	private JPanel mainPanel, infoPanel, engineControlPanel, flapControlPanel, engineControlBoxes[], engineButtonPanels[];
+	private JPanel infoPanel, engineControlPanel, flapControlPanel, engineControlBoxes[], engineBtnPanels[],
+		engineLblPanels[], lPitchBtnPanel, rPitchBtnPanel;
 	private JButton engineUpBtns[], engineDownBtns[], lPitchUp, lPitchDown, rPitchUp, rPitchDown;
-	private JLabel altitudeLbl, directionLbl, latLbl, lonLbl, speedLbl, pitchLbl, engineMaxRPMLbls[], engineCurrentRPMLbls[], lPitchLbl, rPitchLbl;
+	private JLabel altitudeLbl, directionLbl, latLbl, lonLbl, speedLbl, pitchLbl, engineMaxRPMLbls[],
+		engineCurrentRPMLbls[], lPitchLbl, rPitchLbl;
 
 	public GUI(){
 		main = new JFrame();									//Initializing main Panels/frame.
-		mainPanel = new JPanel();
 		infoPanel = new JPanel();
 		engineControlPanel = new JPanel();
 		flapControlPanel = new JPanel();
+		rPitchBtnPanel = new JPanel();
+		lPitchBtnPanel = new JPanel();
 		
-		altitudeLbl = new JLabel("Altitude: " + 0);				//Initializing upper info labels.
+		main.setLayout(new GridLayout(3, 1));					//Applying layouts to frame and panels.
+		main.setSize(1000, 650);
+		main.setResizable(false);
+		infoPanel.setLayout(new GridLayout(3, 2));
+		engineControlPanel.setLayout(new GridLayout(1, 4));
+		flapControlPanel.setLayout(new GridLayout(2, 2));
+		
+		altitudeLbl = new JLabel("Altitude: " + 0);				//Initializing and adding upper info labels.
+		altitudeLbl.setHorizontalAlignment(JLabel.CENTER);
+		infoPanel.add(altitudeLbl);
 		directionLbl = new JLabel("Direction: " + 0);
+		directionLbl.setHorizontalAlignment(JLabel.CENTER);
+		infoPanel.add(directionLbl);
 		pitchLbl = new JLabel("Pitch: " + 0);
+		pitchLbl.setHorizontalAlignment(JLabel.CENTER);
+		infoPanel.add(pitchLbl);
 		latLbl = new JLabel("Lat(X): " + 0);
+		latLbl.setHorizontalAlignment(JLabel.CENTER);
+		infoPanel.add(latLbl);
 		lonLbl = new JLabel("Lat(Y): " + 0);
+		lonLbl.setHorizontalAlignment(JLabel.CENTER);
+		infoPanel.add(lonLbl);
 		speedLbl = new JLabel("Speed: " + 0);
+		speedLbl.setHorizontalAlignment(JLabel.CENTER);
+		infoPanel.add(speedLbl);
 		
-		engineControlBoxes = new JPanel[4];						//Initializing engine panel components
-		engineButtonPanels = new JPanel[4];
+		
+		engineControlBoxes = new JPanel[4];						//Initializing engine panel components.
+		engineBtnPanels = new JPanel[4];
+		engineLblPanels = new JPanel[4];
 		engineUpBtns = new JButton[4];
 		engineDownBtns = new JButton[4];
+		
+		engineMaxRPMLbls = new JLabel[4];
+		engineCurrentRPMLbls = new JLabel[4];
 		for(int i = 0; i < 4; i++){
 			engineMaxRPMLbls[i] = new JLabel("Max RPM: " + 0);
 			engineCurrentRPMLbls[i] = new JLabel("Current RPM: " + 0);
 			engineControlBoxes[i] = new JPanel();
+			engineControlBoxes[i].setLayout(new GridLayout(2, 1));
+			engineBtnPanels[i] = new JPanel();
+			engineBtnPanels[i].setLayout(new GridLayout(1, 2));
+			engineLblPanels[i] = new JPanel();
+			engineLblPanels[i].setLayout(new GridLayout(1, 2));
 			engineUpBtns[i] = new JButton("+100");
 			engineDownBtns[i] = new JButton("-100");
+			
+			engineLblPanels[i].add(engineMaxRPMLbls[i]);
+			engineLblPanels[i].add(engineCurrentRPMLbls[i]);
+			
+			engineBtnPanels[i].add(engineUpBtns[i]);
+			engineBtnPanels[i].add(engineDownBtns[i]);
+			
+			engineControlBoxes[i].add(engineLblPanels[i]);
+			engineControlBoxes[i].add(engineBtnPanels[i]);
+			
+			engineControlPanel.add(engineControlBoxes[i]);
 		}
 		
-		lPitchLbl = new JLabel("Left pitch: " + 0);
+		lPitchLbl = new JLabel("Left pitch: " + 0);				//Initializing flap control components.
+		lPitchLbl.setHorizontalAlignment(JLabel.CENTER);
 		lPitchUp = new JButton("+");
 		lPitchDown = new JButton("-");
+		
 		rPitchLbl = new JLabel("Right Pitch: " + 0);
+		rPitchLbl.setHorizontalAlignment(JLabel.CENTER);
 		rPitchUp = new JButton("+");
 		rPitchDown = new JButton("-");
+		
+		lPitchBtnPanel.setLayout(new GridLayout(2, 1));
+		lPitchBtnPanel.add(lPitchUp);
+		lPitchBtnPanel.add(lPitchDown);
+		rPitchBtnPanel.setLayout(new GridLayout(2, 1));
+		rPitchBtnPanel.add(rPitchUp);
+		rPitchBtnPanel.add(rPitchDown);
+		
+		flapControlPanel.add(lPitchLbl);
+		flapControlPanel.add(rPitchLbl);
+		flapControlPanel.add(lPitchBtnPanel);
+		flapControlPanel.add(rPitchBtnPanel);
 
-		mainPanel.setLayout(new GridLayout(3, 1));
-		infoPanel.setLayout(new GridLayout(3, 2));
-		engineControlPanel.setLayout(new GridLayout(1, 4));
-		flapControlPanel.setLayout(new GridLayout(2, 2));
-
-		main.setLayout(new GridLayout(3, 1));
-		main.setSize(1000, 650);
-		main.setResizable(false);
-
-		boardPanel.setLayout(new GridLayout(3, 3));
-
-		for(int i = 0; i < 4; i++){
-			boardBtns[i] = new JButton();
-			boardBtns[i].addActionListener(addBoardButtonListener(i, j));
-			boardPanel.add(boardBtns[i]);
-		}
-		for(int i = 0; i < 4; i++){
-			boardBtns[i] = new JButton();
-			boardBtns[i].addActionListener(addBoardButtonListener(i, j));
-			boardPanel.add(boardBtns[i]);
-		}
-		playerLbl.setHorizontalAlignment(JLabel.CENTER);
-		infoLbl.setHorizontalAlignment(JLabel.CENTER);
-		movesLbl.setHorizontalAlignment(JLabel.CENTER);
-
-		infoPanel.add(playerLbl);
-		infoPanel.add(movesLbl);
-		infoPanel.add(infoLbl);
 
 		main.add(infoPanel);
 		main.add(engineControlPanel);
@@ -82,7 +112,7 @@ public class GUI{
 		
 		main.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		main.setTitle("Aircraft Controller");
-		boardPanel.setVisible(true);
+		infoPanel.setVisible(true);
 		main.setVisible(true);
 	}//Constructor
 
