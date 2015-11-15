@@ -41,7 +41,7 @@ public class Airplane implements Runnable{
 			
 			try{
 				System.out.println("Altitude: " + gps.getAltitude() + "   X: " + gps.getLon() + "   Y: " + gps.getLat());
-				Thread.sleep((long)samplingTime * 1000);
+				Thread.sleep(100);
 			}catch(InterruptedException ie){ System.out.println(ie.getMessage()); }	//Waits 100 milliseconds to move.
 		}
 	}//run()
@@ -73,8 +73,14 @@ public class Airplane implements Runnable{
 		
 		while(gps.getAltitude() < altitude){
 			move();
+			
+			if(gyrocompass.getPitch() > 45){
+				wings.setLeftAngle(0);
+				wings.setRightAngle(0);
+			}
+			
 			try{
-				Thread.sleep((long)samplingTime * 1000);
+				Thread.sleep(100);
 			}catch(InterruptedException ie){ System.out.println(ie.getMessage()); }	//Waits 100 milliseconds to move.
 		}
 		

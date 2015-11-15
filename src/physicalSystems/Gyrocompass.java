@@ -82,8 +82,9 @@ public class Gyrocompass{
 		} else if(timePassed < 0) {
 			throw new IllegalArgumentException("TimePassed must be a positive value.");
 		}
-		double c = 0.5;																							//TODO Change to Realistic
+		double c = 0.000001;
 		pitch += c * -flapState * currentSpeed;
+		System.out.println(pitch);
 	}//updatePitch()
 	
 	/**

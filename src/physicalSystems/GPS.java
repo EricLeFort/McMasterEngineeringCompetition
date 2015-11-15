@@ -82,7 +82,7 @@ public class GPS{
 			difference = (9.8 - 9.8*(currentSpeed / minClimbSpeed)) * timePassed * timePassed;
 			if(altitude - difference <= groundLevel) {
 				altitude = groundLevel;
-			} else {
+			}else{
 				altitude -= difference;
 			}
 		}
