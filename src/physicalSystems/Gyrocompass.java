@@ -61,7 +61,7 @@ public class Gyrocompass{
 		} else if(timePassed < 0) {
 			throw new IllegalArgumentException("TimePassed must be a positive value.");
 		}
-		double c = 0.5;																							//TODO Change to Realistic 
+		double c = 0.0005; 
 		currentSpeed = currentSpeed / 3.6;
 		direction += c * flapState * ((currentSpeed * timePassed) + (currentAcceleration * timePassed * timePassed));
 		direction = Math.abs(direction % 360);

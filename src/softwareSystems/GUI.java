@@ -168,15 +168,14 @@ public class GUI{
 	
 	public void updateLbls(double altitude, double direction, double pitch, double lat, double lon, double speed, 
 			double engine1RPM, double engine2RPM, double engine3RPM, double engine4RPM){
-		altitudeLbl.setText("Altitude: " + altitude);
+		altitudeLbl.setText("Altitude: " + (int)altitude);
 		directionLbl.setText("Direction: " + direction);
 		pitchLbl.setText("Pitch: " + pitch);
-		lonLbl.setText("Lat(X): " + lat);
-		latLbl.setText("Lon(Y): " + lon);
-		speedLbl.setText("Speed: " + speed);
+		lonLbl.setText("Lat(X): " + (int)lat);
+		latLbl.setText("Lon(Y): " + (int)lon);
+		speedLbl.setText("Speed: " + (int)speed);
 		
 		engineCurrentRPMLbls[0].setText("RPM: " + engine1RPM);
-		System.out.println(engine1RPM);
 		engineCurrentRPMLbls[1].setText("RPM: " + engine2RPM);
 		engineCurrentRPMLbls[2].setText("RPM: " + engine3RPM);
 		engineCurrentRPMLbls[3].setText("RPM: " + engine4RPM);
@@ -185,4 +184,3 @@ public class GUI{
 		rPitchLbl.setText("Right Pitch: " + airplane.getRightFlap());
 	}//updateLbls()
 }//GUI
-

@@ -129,7 +129,6 @@ public class Airplane implements Runnable{
 			logData();
 		}
 		if(tokens % 25 == 0){
-			System.out.println(engines[0].getCurrentRPM());
 			gui.updateLbls(gps.getAltitude(), gyrocompass.getDirection(), gyrocompass.getPitch(), gps.getLat(),
 					gps.getLon(), speed, engines[0].getCurrentRPM(), engines[1].getCurrentRPM(),
 					engines[2].getCurrentRPM(), engines[3].getCurrentRPM());

@@ -54,7 +54,6 @@ public class GPSTest {
 	
 	@Test
 	public void testUpdateAltitude() {
-		Wings wings = new Wings();
 		Engine[] engine = new Engine[2];
 		GPS gps = new GPS();
 		final double MAXRPM = 10000;
